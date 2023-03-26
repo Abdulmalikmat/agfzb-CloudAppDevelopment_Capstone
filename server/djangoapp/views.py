@@ -18,9 +18,9 @@ logger = logging.getLogger(__name__)
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "https://9bebcb01.eu-de.apigw.appdomain.cloud/api/dealership"
+       #1 url = "https://9bebcb01.eu-de.apigw.appdomain.cloud/api/dealership"
         # Get dealers from the Cloudant DB
-        context["dealerships"] = get_dealers_from_cf(url)
+     # 1  context["dealerships"] = get_dealers_from_cf(url)
 
         # dealer_names = ' '.join([dealer.short_name for dealer in context["dealerships"]])
         # return HttpResponse(dealer_names)
@@ -105,7 +105,7 @@ def registration_request(request):
 def get_dealer_details(request, dealer_id):
     context = {}
     if request.method == "GET":
-        url = 'https://9bebcb01.eu-de.apigw.appdomain.cloud/api/review'
+     #  1 url = 'https://9bebcb01.eu-de.apigw.appdomain.cloud/api/review'
         reviews = get_dealer_reviews_from_cf(url, dealer_id=dealer_id)
         context = {
             "reviews":  reviews, 
@@ -121,11 +121,11 @@ def add_review(request, dealer_id):
     if request.user.is_authenticated:
         # GET request renders the page with the form for filling out a review
         if request.method == "GET":
-            url = f"https://5b93346d.us-south.apigw.appdomain.cloud/dealerships/dealer-get?dealerId={dealer_id}"
+          # 1 url = f"https://5b93346d.us-south.apigw.appdomain.cloud/dealerships/dealer-get?dealerId={dealer_id}"
             # Get dealer details from the API
             context = {
                 "cars": CarModel.objects.all(),
-                "dealer": get_dealer_by_id(url, dealer_id=dealer_id),
+             #1   "dealer": get_dealer_by_id(url, dealer_id=dealer_id),
             }
             return render(request, 'djangoapp/add_review.html', context)
 
@@ -150,7 +150,7 @@ def add_review(request, dealer_id):
             else: 
                 review["purchase_date"] = None
 
-            url = "https://9bebcb01.eu-de.apigw.appdomain.cloud/api/review"  # API Cloud Function route
+         #   url = "https://9bebcb01.eu-de.apigw.appdomain.cloud/api/review"  # API Cloud Function route
             json_payload = {"review": review}  # Create a JSON payload that contains the review data
 
             # Performing a POST request with the review
